@@ -1,5 +1,5 @@
 import torch
-assert torch.__version__.startswith("1.8")
+assert torch.__version__.startswith("1.7")
 # Some basic setup:
 # Setup detectron2 logger
 import detectron2
@@ -22,7 +22,7 @@ cap = cv2.VideoCapture(0)
 # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 300) # Ширина кадров в видеопотоке.
 # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 200) # Высота кадров в видеопотоке.
 # wget http://images.cocodataset.org/val2017/000000439715.jpg -q -O input.jpg
-im = cv2.imread("000000439715.jpg")
+#im = cv2.imread("000000439715.jpg")
 # cv2.imshow('frame',im)
 
 
@@ -36,10 +36,10 @@ predictor = DefaultPredictor(cfg)
 
 while True:
     ret, img = cap.read()
-    # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    #gray = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     outputs = predictor(img)
     v = Visualizer(img[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1.2)
-    out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
+    out = v.draw_instance_predictions(outputs["instances"].to("cpu")) #
     cv2.imshow("camera", out.get_image()[:, :, ::-1])
     if cv2.waitKey(10) == 27: # Клавиша Esc
         break
